@@ -8,9 +8,6 @@ use App\Http\Controllers\AppointmentController;
 
 
 
-// Route::get('/user', function (Request $request) {
-//     return $request->user();
-// })->middleware('auth:sanctum');
 Route::get('/allusers', [UserController::class, 'index']);
 Route::post('/createuser',[UserController::class,'create']);
 Route::put('/updateuser/{id}', [UserController::class, 'update']);
@@ -21,12 +18,6 @@ Route::put('/change-appointment-status/{patient_id}/{appointment_id}/{status}/{d
 
 
 Route::get('/show-all-appointments', [DoctorController::class, 'showallappointments']);
-// Route::post('/show-all-appointments/{id}', [DoctorController::class, 'showAllAppointments']);
 
-
-
-
-     
-//Route::apiResource('/products',ProductController::class);
 
     

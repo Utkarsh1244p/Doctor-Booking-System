@@ -19,7 +19,7 @@ class AppointmentController extends Controller
             'patient_id' =>'required|exists:users,id',
             'doctor_id' =>'required|exists:users,id',
             'appointment_date' =>'required|date|after:' 
-            // Add more validation rules as needed. For example, check if the selected doctor is available at the specified appointment date.
+            
 
         ]);
         if ($validator->fails()) {
@@ -28,7 +28,7 @@ class AppointmentController extends Controller
 
         $appointment= new Appointment();
         $existingAppointment=$appointment->CheckAppointmentAvailibility($request->doctor_id,$request->appointment_date);
-        //dd($existingAppointment);
+        
         if ($existingAppointment) {
             return response()->json([
                 'success' => false,
@@ -55,7 +55,7 @@ class AppointmentController extends Controller
         $validator = Validator::make($request->all(), [
             'patient_id' =>'required|exists:users,id',           
             'appointment_date' =>'date' 
-            // Add more validation rules as needed. For example, check if the selected doctor is available at the specified appointment date.
+            
 
         ]);
         if ($validator->fails()) {
@@ -86,12 +86,12 @@ class AppointmentController extends Controller
             return response()->json(['message' => 'User not found'], 404);
         }
  
-        if($user->role_id=='1' && $status=='approved'){
+        if($user->role_id=='1' && ($status=='approved' || $status=='appointed')){
             return response()->json(['message' => 'Invalid status provided for user'], 404);
 
         }
         
-        if (!in_array($status, ['rejected','cancelled','postpond','approved','appointment'])) {
+        if (!in_array($status, ['rejected','cancelled','postpond','approved','appointed'])) {
             return response()->json(['message' => 'Invalid status provided'], 400);
         }
 
@@ -99,7 +99,6 @@ class AppointmentController extends Controller
             return response()->json(['message' => 'To postpond appointment Date is required'], 400);
         }   
      
-        
         
         $appointment=new Appointment();
         if($user->role_id=='1'){
