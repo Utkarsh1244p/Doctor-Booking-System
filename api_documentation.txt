@@ -87,26 +87,23 @@ Response Body (JSON):
 
 
 
-2)
-API: Create User
+2)API: Create User
 Method: POST
 Endpoint: /createuser
 Description: Creates a new user in the system.
-Authentication: Not required (Adjust as needed).
-Input: 
-Request
-Input (JSON):
-{
-  "name": "Vinayak",
-  "email": "vinayak@gmail.com",
-  "password": "Hello",
-  "address1": "palava",
-  "address2": "casa rio",
-  "country_state_city_id": "1",
-  "contact": "9899898989",
-  "role_id": "1",
-  "status": "active"
-}
+
+Request Input:
+name:Shivam
+email:shivam@gmail.com
+password:hello
+address1:Gitman street
+address2:
+country_id:1
+state_id:1
+city_id:1
+contact:5456765456
+role_id:71503d3c-7cd6-11ef-aced-a4a13d4dcc16
+status:active
 
 Request Parameters:
 name (string, required): The full name of the user.
@@ -114,9 +111,11 @@ email (string, required): User's email address.
 password (string, required): The password for the user account.
 address1 (string, required): Primary address of the user.
 address2 (string, optional): Secondary address of the user.
-country_state_city_id (string, required): ID referencing the user's location (e.g., country, state, and city).
+country(number, required): User's country should be 1 for India.
+state(number, required): User's state should be 1 for Maharashtra.
+city(number, required): User's city should be 1 for mumbai.
 contact (string, required): User's phone number.
-role_id (string, required): The role of the user (e.g., 1 for patient, 2 for doctor).
+role_id (string, required): The role of the user should be taken from role table (there are two roles 1.patient, 2.doctor).
 status (string, required): User's current status (e.g., active or inactive).
 
 Response (Success)
@@ -144,9 +143,11 @@ Input (JSON):
   "password": "Hello",
   "address1": "palavaa",
   "address2": "casa rio0",
-  "country_state_city_id": 2,
+  "country": 2,
+  "city": 1,
+  "State": 1,
   "contact": 9899898988,
-  "role_id": 2,
+  "role_id": 71503d3c-7cd6-11ef-aced-a4a13d4dcc16,
   "status": "active"
 }
 Request Parameters:
@@ -155,10 +156,12 @@ email (string, required): User's updated email address.
 password (string, required): The updated password for the user account.
 address1 (string, required): Updated primary address of the user.
 address2 (string, optional): Updated secondary address of the user.
-country_state_city_id (integer, required): Updated location ID (e.g., country, state, and city).
-contact (integer, required): Updated phone number of the user.
-role_id (integer, required): Updated role of the user (e.g., 1 for patient, 2 for doctor).
-status (string, required): User's updated status (e.g., active or inactive).
+country(number, required): User's country should be 1 for India.
+state(number, required): User's state should be 1 for Maharashtra.
+city(number, required): User's city should be 1 for mumbai.
+contact (string, required): User's phone number.
+role_id (string, required): The role of the user should be taken from role table (there are two roles 1.patient, 2.doctor).
+status (string, required): User's current status (e.g., active or inactive).
 
 Response (Success)
 Status Code: 200 OK
@@ -176,13 +179,13 @@ API: Schedule an Appointment
 Method: POST
 Endpoint: 127.0.0.1:8000/api/take-appointment
 Description: Creates a new appointment for a patient with a specific doctor at a specified date and time.
-Authentication: Not required (Adjust as needed).
+
 Request
 Input (JSON):
 {
-    "patient_id": "5a50667c-be0b-4b51-9783-926739a7f701",
-    "doctor_id": "fcf40eae-07a4-4e53-b16b-8b1a471e2b1a",
-    "appointment_date": "2024-10-30 21:20:00"
+    "patient_id": "af0e0354-efd5-413d-81b7-40aedb2123f2",
+    "doctor_id": "5ba2f5d6-4f1d-44bd-8b0b-b783b5032def",
+    "appointment_date": "2024-10-24 14:00:00"
 }
 Request Parameters:
 patient_id (UUID, required): The unique identifier of the patient booking the appointment.
@@ -194,12 +197,12 @@ Status Code: 201 Created
 Response Body (JSON):
 {
     "id": 0,
-    "patient_id": "5a50667c-be0b-4b51-9783-926739a7f701",
-    "doctor_id": "fcf40eae-07a4-4e53-b16b-8b1a471e2b1a",
-    "appointment_date": "2024-10-30 21:20:00",
+    "patient_id": "af0e0354-efd5-413d-81b7-40aedb2123f2",
+    "doctor_id": "5ba2f5d6-4f1d-44bd-8b0b-b783b5032def",
+    "appointment_date": "2024-10-24 14:00:00",
     "status": "pending",
-    "updated_at": "2024-09-27T12:16:08.000000Z",
-    "created_at": "2024-09-27T12:16:08.000000Z"
+    "updated_at": "2024-09-27T19:01:22.000000Z",
+    "created_at": "2024-09-27T19:01:22.000000Z"
 }
 
 Response Fields:
@@ -213,57 +216,72 @@ updated_at (timestamp): The time the appointment was last updated.
 
 
 5)
-API: Show All Appointments (For Patient)
+API: Show All Appointments (For Doctor)
 Method : Get
-Link: 127.0.0.1:8000/api/check-appointment
-Two Ways: 
-1.With Only Patient Id
+Link: 127.0.0.1:8000/api/show-all-appointments
+Two Ways:
+1.With Only Doctor Id
 input:
 {
-    "patient_id":"4889057f-24dc-4b34-91fc-7d35fdae5baa"
+"doctor_id":"5ba2f5d6-4f1d-44bd-8b0b-b783b5032def"
 }
+
+
+
 output:
 [
     {
-        "id": 0,
-        "patient_id": "4889057f-24dc-4b34-91fc-7d35fdae5baa",
-        "doctor_id": "f2865395-5263-42a7-8315-71d49db29a18",
-        "appointment_date": "2024-10-29 21:20:00",
-        "status": "rejected",
-        "created_at": "2024-09-27T05:03:56.000000Z",
-        "updated_at": "2024-09-27T09:13:38.000000Z",
-        "deleted_at": null,
-        "appointment_updated_by": "4889057f-24dc-4b34-91fc-7d35fdae5baa"
+        "id": 11,
+        "patient_id": "af0e0354-efd5-413d-81b7-40aedb2123f2",
+        "doctor_id": "5ba2f5d6-4f1d-44bd-8b0b-b783b5032def",
+        "appointment_date": "2024-10-10 14:00:00",
+        "status": "appointed",
+        "appointment_updated_by": "af0e0354-efd5-413d-81b7-40aedb2123f2",
+        "created_at": "2024-09-27T15:22:45.000000Z",
+        "updated_at": "2024-09-27T18:00:13.000000Z",
+        "deleted_at": null
     },
     {
-        "id": 57000000,
-        "patient_id": "4889057f-24dc-4b34-91fc-7d35fdae5baa",
-        "doctor_id": "6c4680ed-90b8-4e34-9e79-d1c88c68225b",
-        "appointment_date": "2024-09-26 21:50:23",
-        "status": "appointed",
-        "created_at": "2024-09-26T15:56:09.000000Z",
-        "updated_at": "2024-09-26T15:56:09.000000Z",
-        "deleted_at": null,
-        "appointment_updated_by": null
+        "id": 7,
+        "patient_id": "af0e0354-efd5-413d-81b7-40aedb2123f2",
+        "doctor_id": "5ba2f5d6-4f1d-44bd-8b0b-b783b5032def",
+        "appointment_date": "2024-10-24 14:00:00",
+        "status": "pending",
+        "appointment_updated_by": null,
+        "created_at": "2024-09-27T19:01:22.000000Z",
+        "updated_at": "2024-09-27T19:01:22.000000Z",
+        "deleted_at": null
+    },
+    {
+        "id": 8,
+        "patient_id": "af0e0354-efd5-413d-81b7-40aedb2123f2",
+        "doctor_id": "5ba2f5d6-4f1d-44bd-8b0b-b783b5032def",
+        "appointment_date": "2024-10-28 14:00:00",
+        "status": "pending",
+        "appointment_updated_by": "5ba2f5d6-4f1d-44bd-8b0b-b783b5032def",
+        "created_at": "2024-09-27T15:55:21.000000Z",
+        "updated_at": "2024-09-27T17:43:38.000000Z",
+        "deleted_at": null
     },
     {
         "id": 0,
-        "patient_id": "4889057f-24dc-4b34-91fc-7d35fdae5baa",
-        "doctor_id": "f2865395-5263-42a7-8315-71d49db29a18",
-        "appointment_date": "2024-10-28 21:20:00",
-        "status": "appointed",
-        "created_at": "2024-09-26T16:23:44.000000Z",
-        "updated_at": "2024-09-26T16:23:44.000000Z",
-        "deleted_at": null,
-        "appointment_updated_by": null
+        "patient_id": "af0e0354-efd5-413d-81b7-40aedb2123f2",
+        "doctor_id": "5ba2f5d6-4f1d-44bd-8b0b-b783b5032def",
+        "appointment_date": "2024-10-28 14:00:00",
+        "status": "pending",
+        "appointment_updated_by": null,
+        "created_at": "2024-09-27T17:10:44.000000Z",
+        "updated_at": "2024-09-27T17:10:44.000000Z",
+        "deleted_at": null
     }
 ]
-2.With Patient id & Appointment Date
-i)Date with time
+
+2.With both Doctor Id and appointment date
+
 input:
 {
-    "patient_id":"4889057f-24dc-4b34-91fc-7d35fdae5baa",
-    "appointment_date":"2024-09-27 12:01:30"
+"doctor_id":"5ba2f5d6-4f1d-44bd-8b0b-b783b5032def",
+"appointment_date":"2024-10-27 14:00:00"
 }
 output:
 [
@@ -336,15 +354,16 @@ output:
 
 
 6)
-API: Show All Appointments (For Doctor)
+API: Show All Appointments (For Patient)
 Method : Get
 Link: 127.0.0.1:8000/api/check-appointment
-Two Ways: 
+
+Two Ways:
 1.With Only Doctor Id
-input:
 {
-    "doctor_id":"f2865395-5263-42a7-8315-71d49db29a18"
+    "patient_id":"af0e0354-efd5-413d-81b7-40aedb2123f2",
 }
+
 output:
 [
     {
@@ -381,14 +400,13 @@ output:
         "appointment_updated_by": null
     }
 ]
-2.With Doctor id & Appointment Date
+2.With patient id & Appointment Date
 i)Date with time
 input:
 {
-    "doctor_id":"6c4680ed-90b8-4e34-9e79-d1c88c68225b",
-    "appointment_date":"2024-09-27 21:20:00"
-}
-output:
+    "patient_id":"af0e0354-efd5-413d-81b7-40aedb2123f2",    
+    "appointment_date":"2024-10-27"
+}output:
 [
     {
         "id": 2,
@@ -424,49 +442,6 @@ output:
         "appointment_updated_by": null
     }
 ]
-ii)Only Date
-input:
-{
-    "doctor_id":"6c4680ed-90b8-4e34-9e79-d1c88c68225b",
-    "appointment_date":"2024-09-27"
-}
-output:
-[
-    {
-        "id": 2,
-        "patient_id": "5a50667c-be0b-4b51-9783-926739a7f701",
-        "doctor_id": "6c4680ed-90b8-4e34-9e79-d1c88c68225b",
-        "appointment_date": "2024-09-27 21:20:00",
-        "status": "pending",
-        "created_at": "2024-09-26T16:16:49.000000Z",
-        "updated_at": "2024-09-26T16:16:49.000000Z",
-        "deleted_at": null,
-        "appointment_updated_by": null
-    },
-    {
-        "id": 0,
-        "patient_id": "4889057f-24dc-4b34-91fc-7d35fdae5baa",
-        "doctor_id": "6c4680ed-90b8-4e34-9e79-d1c88c68225b",
-        "appointment_date": "2024-09-27 21:20:00",
-        "status": "pending",
-        "created_at": "2024-09-26T15:56:54.000000Z",
-        "updated_at": "2024-09-26T15:56:54.000000Z",
-        "deleted_at": null,
-        "appointment_updated_by": null
-    },
-    {
-        "id": 0,
-        "patient_id": "4889057f-24dc-4b34-91fc-7d35fdae5baa",
-        "doctor_id": "6c4680ed-90b8-4e34-9e79-d1c88c68225b",
-        "appointment_date": "2024-09-27 12:01:30",
-        "status": "appointed",
-        "created_at": "2024-09-26T07:19:13.000000Z",
-        "updated_at": "2024-09-26T07:19:13.000000Z",
-        "deleted_at": null,
-        "appointment_updated_by": null
-    }
-]
-
 
 
 7)
@@ -492,7 +467,7 @@ output:
     "message": "Appointment is rejected successfully!!!!"
 }
 
-c)Postpond Appointment 
+c)Postpond Appointment
 input:
 127.0.0.1:8000/api/change-appointment-status/5a50667c-be0b-4b51-9783-926739a7f701/2a4ddf70-24af-4bcd-b567-fb1a75baf9ac/postpond/2024-09-28 21:20:00
 output:
@@ -519,7 +494,7 @@ output:
     "message": "Appointment is rejected successfully!!!!"
 }
 
-d)Approve Appointment 
+d)Approve Appointment
 input:
 127.0.0.1:8000/api/change-appointment-status/6c4680ed-90b8-4e34-9e79-d1c88c68225b/6f81ad99-086d-424b-9b12-d2ec5ac762e9/approved
 output:
@@ -527,7 +502,7 @@ output:
     "message": "Appointment is approved successfully!!!!"
 }
 
-d)Postpond Appointment 
+d)Postpond Appointment
 input:
 127.0.0.1:8000/api/change-appointment-status/6c4680ed-90b8-4e34-9e79-d1c88c68225b/4f787de3-042e-4468-9acf-32b4f01fc7e1/postpond/2025-10-30 21:20:00
 output:
@@ -542,6 +517,3 @@ or
 doctor_id (UUID): The ID of the doctor with whom the appointment was scheduled.
 appointment_id (UUID): The ID of the appointment.
 status (string): The current status of the appointment, initially set to "pending".
-
-Optional Field(needed for postpond)
-appointment_date (datetime): The exact date and time of the appointment.
