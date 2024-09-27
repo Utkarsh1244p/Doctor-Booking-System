@@ -42,8 +42,8 @@ Doctors can manage their schedule with these APIs:
 1. **Clone the Repository**
 
    ```bash
-   git clone https://github.com/Utkarsh1244p/restoran.git
-   cd restoran
+   git clone https://github.com/Utkarsh1244p/doctor-booking-system.git
+   cd doctor-booking-system
 
 2. **Install PHP Dependencies**
 Install the required PHP dependencies using Composer:
