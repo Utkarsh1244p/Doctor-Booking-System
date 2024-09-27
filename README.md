@@ -2,6 +2,10 @@
 
 The **Doctor Booking System** is an API-based Laravel application designed for managing patient-doctor appointments. The system divides users into two roles, **Patients** and **Doctors**, ensuring authentication and role-based access to services. Unauthorized users are restricted from performing any actions.
 
+# Version Requirement :
+- Laravel Framework 11.24.1
+- PHP 8.2.12
+
 ## Features
 
 ### Users
