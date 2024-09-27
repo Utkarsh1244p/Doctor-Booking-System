@@ -8,24 +8,28 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
-    public function up(): void
+    public function up()
     {
-        Schema::create('appointments', function (Blueprint $table) {
-            $table->uuid('id')->primarykey();
-            $table->uuid('used_id');
-            $table->enum('status',["appointed","pending","cancelled","expired"])->defaultValue('appointed');          
+        Schema::create('roles', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->enum('role_name',['patient','doctor']);
+            $table->enum('status',['active','inactive']);
             $table->timestamps();
             $table->softDeletes();
-            
         });
     }
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
-    public function down(): void
+    public function down()
     {
-        //
+        Schema::dropIfExists('roles');
+
     }
 };

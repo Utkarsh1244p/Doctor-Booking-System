@@ -8,24 +8,26 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
-    public function up(): void
+    public function up()
     {
-        Schema::create('cities', function (Blueprint $table) {
-            $table->uuid('id')->primarykey();
+        Schema::create('states', function (Blueprint $table) {
+            $table->increments('id')->index();
             $table->string('name');
-            $table->timestamps();
-            $table->softDeletes();
-
-            
+            $table->integer('country_id');            
         });
     }
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
-    public function down(): void
+    public function down()
     {
-        //
+        Schema::dropIfExists('states');
+
     }
 };
