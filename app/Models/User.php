@@ -6,10 +6,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -24,7 +25,9 @@ class User extends Authenticatable
         'password',
         'address1',
         'address2',
-        'country_state_city_id',
+        'country_id',
+        'state_id',
+        'city_id',
         'contact',
         'role_id',
         'status',
@@ -43,20 +46,29 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * The attributes that should be cast.
      *
-     * @return array<string, string>
+     * @var array<string, string>
      */
-    protected function casts(): array
-    {
-        return [
-            'password' => 'hashed',
-        ];
-    }
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
+
 
     public function getUsers()
     {
       $getusers=$this->where('status','active')->get();
       return $getusers;
     }
+
+    public function getUsersDetails($id)
+    {
+        $getUser = User::where('users.status', 'active')
+        ->where('users.id',$id)
+        ->join('roles', 'users.role_id', '=', 'roles.id')
+        ->select('users.*', 'roles.role_name as role_name')
+        ->first();
+      return $getUser;
+    }
+    
 }
